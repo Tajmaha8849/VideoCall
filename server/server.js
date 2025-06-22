@@ -6,13 +6,21 @@ import cors from 'cors';
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:5173", "https://video-call-orcin.vercel.app", "http://192.168.137.1:5173","http://172.16.0.2:5173"],
-    methods: ["GET", "POST"]
-  }
+   transports: ['websocket'],
+  secure: true
 });
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "http://192.168.137.1:5173",
+    "http://172.16.0.2:5173",
+    "https://video-call-orcin.vercel.app"
+  ],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Store rooms and users
