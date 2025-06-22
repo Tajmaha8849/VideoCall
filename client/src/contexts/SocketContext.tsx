@@ -26,9 +26,11 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
       const backendURL = import.meta.env.VITE_BACKEND_URL || window.location.origin;
 
-    const newSocket = io(backendURL, {
-    transports: ['websocket'], // Optional: force websocket only
-  });
+  const newSocket = io(backendURL, {
+  transports: ['websocket'],
+  secure: true,
+  withCredentials: true
+});
     newSocket.on('connect', () => {
       console.log('Connected to server');
       setConnected(true);
